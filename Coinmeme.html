@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrapeFox.co - The Purple Revolution</title>
+    <style>
+        /* Global Styles */
+        body {
+            background-color: #240046;
+            color: white;
+            font-family: "Poppins", sans-serif;
+            text-align: center;
+            margin: 0;
+            transition: background 0.5s, color 0.5s;
+        }
+
+        /* Dark Mode */
+        .dark-mode {
+            background-color: #000;
+            color: #fff;
+        }
+
+        /* Navbar */
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        nav ul li a, #dark-mode-toggle {
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            transition: opacity 0.3s;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            opacity: 0.7;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 100px 20px;
+            background: linear-gradient(135deg, #4B0082, #240046);
+        }
+
+        .cta {
+            background: linear-gradient(135deg, #9400D3, #4B0082);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 50px;
+        }
+
+        .cta:hover {
+            box-shadow: 0 0 10px #9400D3;
+            transform: scale(1.1);
+        }
+
+        /* Glassmorphism Effect for Stats */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            padding: 20px;
+            color: white;
+            box-shadow: 0 4px 10px rgba(255,255,255,0.2);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 class="logo">🍇 GrapeFox.co</h1>
+        <nav>
+            <ul>
+                <li><a href="about.html">About</a></li>
+                <li><a href="buy.html">Buy Coins</a></li>
+                <li><a href="stats.html">Live Stats</a></li>
+                <li><button id="dark-mode-toggle">🌙 Toggle Dark Mode</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h2>🦊 The Fox Runs on Grape</h2>
+        <p>The **most vibrant** meme coin in history—join the movement!</p>
+        <button class="cta" id="buy-button">Buy GrapeFox Now</button>
+    </section>
+
+    <section id="stats" class="stats">
+        <h2>📈 Live Token Stats</h2>
+        <div class="stat-card">
+            <h3>Market Cap</h3>
+            <p id="market-cap">$0</p>
+        </div>
+        <div class="stat-card">
+            <h3>Active Holders</h3>
+            <p id="holders">0</p>
+        </div>
+        <div class="stat-card">
+            <h3>24h Volume</h3>
+            <p id="volume">$0</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 GrapeFox.co | All rights reserved</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            async function fetchTokenData() {
+                try {
+                    let response = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=grapefox&vs_currencies=usd&include_market_cap=true");
+                    let data = await response.json();
+                    
+                    document.getElementById("market-cap").textContent = `$${data.grapefox.market_cap}`;
+                    document.getElementById("holders").textContent = data.grapefox.holders;
+                    document.getElementById("volume").textContent = `$${data.grapefox.volume}`;
+                } catch (error) {
+                    console.log("Failed to fetch live data:", error);
+                }
+            }
+
+            fetchTokenData();
+
+            // Dark Mode Toggle
+            document.getElementById("dark-mode-toggle").addEventListener("click", () => {
+                document.body.classList.toggle("dark-mode");
+            });
+
+            // Buy Button - Redirect to Exchange
+            document.getElementById("buy-button").addEventListener("click", () => {
+                alert("Redirecting to buy GrapeFox Coins!");
+                window.location.href = "https://grapefox.exchange"; // Replace with actual buy link
+            });
+        });
+    </script>
+
+</body>
+</html>
